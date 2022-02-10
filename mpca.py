@@ -32,7 +32,7 @@ def run(X, target_shape, eta=1e-3, iter=1024):
         _permute = [permute.index(j) for j in range(rank_num+1)]
         Y = Y.permute(_permute)
 
-    psi = sum([torch.norm(Y[i]) for i in range(Y.shape[0])])
+    psi = sum([torch.norm(Y[i],p='fro') for i in range(Y.shape[0])])
 
     for k in range(iter):
         pre_Y = Y
@@ -67,7 +67,7 @@ def run(X, target_shape, eta=1e-3, iter=1024):
             _permute = [permute.index(j) for j in range(rank_num+1)]
             Y = Y.permute(_permute)
         pre_psi = sum([torch.norm(pre_Y[i]) for i in range(pre_Y.shape[0])])
-        psi = sum([torch.norm(Y[i]) for i in range(Y.shape[0])])
+        psi = sum([torch.norm(Y[i],p='fro') for i in range(Y.shape[0])])
         if pre_psi > psi:
             Y = pre_Y
             break
